@@ -1,31 +1,42 @@
 # Release Process
 
- * code: https://github.com/watson-developer-cloud/java-sdk
- * maven: http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22java-sdk%22
+* code: https://github.com/watson-developer-cloud/java-sdk
+* maven: http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22java-sdk%22
 
 ## Guide to uploading artifacts to the Central Repository
 
-We use sonatype as repository manager, it's used as the input channel for the Central Repository running the Sonatype Open Source Repository Hosting OSSRH service.
+We use Sonatype as repository manager, it's used as the input channel for the Central Repository running the Sonatype Open Source Repository Hosting(OSSRH) service.
 
 ### Prerequisites
-If you are not familiar with sonatype and/or the maven release process please read the following material:  
- * Sonatype: http://central.sonatype.org/pages/apache-maven.html
- * Releasing artifacts to Sonatype: http://kirang89.github.io/blog/2013/01/20/uploading-your-jar-to-maven-central/
- * Install GPG and create a public key. More info: http://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/#.VUL_DtNViko
 
+If you are not familiar with Sonatype and/or the maven release process please read the following material:
+
+* Sonatype: http://central.sonatype.org/pages/apache-maven.html
+* Releasing artifacts to Sonatype: http://kirang89.github.io/blog/2013/01/20/uploading-your-jar-to-maven-central/
+* Install GPG, and create a public key. More info: http://central.sonatype.org/pages/working-with-pgp-signatures.html
 
 ### Release steps
 
-  1. Make sure that `pom.xml` and `build.gradle` have the same version number. In the `pom.xml` file the version should ends with -SNAPSHOT
+  1. Update all READMEs to include the new version number
 
-  2. With the SCM connection configured correctly you can perform a release deployment to OSSRH (Staging) with:
+     This can be done using [bumpversion]. If necessary, it can be installed with the following command:
 
-    `mvn release:clean release:prepare`
+     ```bash
+     pip install bumpversion
+     ```
 
-    You will have to answer prompts for versions and tags. That will tag and commit a new version into your repository automatically.
+     To then update all version numbers, simply run:
 
-  3. Deploy to maven central:
+     ```bash
+     bumpversion major|minor|patch
+     ```
 
-    `mvn release:perform`
+  1. Perform a release deployment to OSSRH (Staging) with:
 
-    This execution will deploy to OSSRH and release to the Central Repository in one go.
+     ```bash
+     `gradle release`
+     ```
+
+     You will have to answer prompts for versions and tags. That will tag and commit a new version into your repository automatically.
+
+[bumpversion]: https://pypi.python.org/pypi/bumpversion
